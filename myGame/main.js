@@ -12,13 +12,14 @@ let cactus = [];
 let dirSpeed = -3;
 let speed = -4;
 let score;
+// set up function
 function setup(){
   score = 0;
 dino = new Dino(0, 170);
 for (i = 0; i < numberOfCactus; i++) {
   let cactusY = randomNum(140,170);
   let cactusHeight = cactusY + canvasHeight-cactusY;
-    cactus[i] = new Cactus(canvasWidth + i * 300, cactusY, speed, randomNum(10,30), cactusHeight);
+    cactus[i] = new Cactus(canvasWidth + i * 300, cactusY, speed, 10, cactusHeight);
   
   
   }
@@ -36,7 +37,7 @@ setInterval(function(){
 // animation loop
 function draw(timeStamp){
     stopId=window.requestAnimationFrame(draw);
-    let collision;
+    // let collision;
     let cactusY = randomNum(140,170);
     let cactusHeight = cactusY + canvasHeight-cactusY;
     backGround(); 
@@ -44,39 +45,21 @@ function draw(timeStamp){
     for (i = 0; i < cactus.length; i++) {
         cactus[i].show();
         cactus[i].move();
-        if (cactus[i].x > dino.x + dino.w || cactus[i].y > dino.y + dino.h || cactus[i].x + cactus[i].w < dino.x || cactus[i].y + cactus[i].h < dino.y) {
-          collision = false;
-    
-        } else {
-          collision = true;
-    
-        }
-        if (collision == true) {
-           endGame();
-            
-            
-        } 
-        if (cactus[i].x < -40) {
-          cactus.shift();
-            if (cactus.length < numberOfCactus) {
-              
-            cactus.push(new Cactus(canvasWidth, cactusY, speed, randomNum(5,40), cactusHeight));
-            
-          }
-    
-        }
-        
+        cactus[i].hitDetection(); 
+        cactus[i].removeAndAdd(cactusY , cactusHeight);
       }
+
+
       ctx.fillStyle = "red";
       ctx.fill();
       ctx.font = "12px Arial";
       ctx.fillText(`score:${score++}`, 20, 20);
 
-console.log(speed, dirSpeed);
+
  
-    dino.show();
-    dino.jump();
-    
+      dino.show();
+      dino.jump();
+      
     
 
     
