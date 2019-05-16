@@ -3,9 +3,33 @@
     margin: 0;
     padding: 0;
   }
+
+#canvas_container{
+width: auto;
+display: flex;
+justify-content: center;
+
+
+
+
+}
+
+
   
   canvas {
-   /* background-color: black;  */
+border: 10px solid black;
+  }
+
+#button_container{
+width: auto;
+
+text-align: center;
+
+
+}
+  button{
+
+
 
 
   }
