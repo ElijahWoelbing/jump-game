@@ -1,20 +1,19 @@
 class Cactus {
 
 
-constructor(x, y, speed, cactusWidth, cactusheight){
+constructor(x){
     this.x = x;
-    this.y = y;
-    this.h = cactusheight;
-    this.w = cactusWidth;
-    this.speed = speed;
+    this.y = randomNum(140,170);
+    this.h = canvasHeight-this.y;
+    this.w = 10;
+    this.speed = -4;
     this.collision;
-    
 }
 
 
 
 show() {
-    ctx.fillStyle = "blue"
+    ctx.fillStyle = "black"
     ctx.fill()
     ctx.fillRect(this.x, this.y, this.w, this.h)
 
@@ -44,12 +43,12 @@ hitDetection(){
     } 
 }
 
-removeAndAdd(cactusY, cactusHeight){
-  if (this.x < -40) {
+removeAndAdd(){
+  if (this.x < -this.w) {
     cactus.shift();
       if (cactus.length < numberOfCactus) {
         
-      cactus.push(new Cactus(canvasWidth, cactusY, speed, 10, cactusHeight));
+      cactus.push(new Cactus(canvasWidth, this.y, 10, this.h));
       
     }
 

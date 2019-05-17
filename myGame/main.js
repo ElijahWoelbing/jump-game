@@ -9,68 +9,42 @@ let stopId;
 let dino;
 let numberOfCactus = 2;
 let cactus = [];
-let dirSpeed = -3;
-let speed = -4;
 let score;
 // set up function
 function setup(){
   score = 0;
-dino = new Dino(0, 170);
+dino = new Dino();
 for (i = 0; i < numberOfCactus; i++) {
-  let cactusY = randomNum(140,170);
-  let cactusHeight = cactusY + canvasHeight-cactusY;
-    cactus[i] = new Cactus(canvasWidth + i * 300, cactusY, speed, 10, cactusHeight);
-  
-  
-  }
+    cactus[i] = new Cactus(canvasWidth + i * 300);
+}
   
 
 }
 
 window.onload = setup;
-// // speed up game
-setInterval(function(){
-  if(speed >= -6){
-    speed += -.1;}
-}, 10000);
+
 
 // animation loop
-function draw(timeStamp){
+function draw(){
     stopId=window.requestAnimationFrame(draw);
-    // let collision;
-    let cactusY = randomNum(140,170);
-    let cactusHeight = cactusY + canvasHeight-cactusY;
+  
+    
     backGround(); 
     // display cactus and hit detection
     for (i = 0; i < cactus.length; i++) {
         cactus[i].show();
         cactus[i].move();
         cactus[i].hitDetection(); 
-        cactus[i].removeAndAdd(cactusY , cactusHeight);
+        cactus[i].removeAndAdd();
       }
 
 
-      ctx.fillStyle = "red";
-      ctx.fill();
-      ctx.font = "12px Arial";
-      ctx.fillText(`score:${score++}`, 20, 20);
-
-
+      updateScore();
  
       dino.show();
       dino.jump();
-      
-    
 
-    
-    
-    
-    
-       // create ground
-ctx.fillStyle = "brown";
-ctx.fill();
-ctx.fillRect(0,canvasHeight-10,canvasWidth,10); 
-// request animation
+      
     
 }
 // draws background
@@ -92,13 +66,11 @@ return Math.floor(Math.random()*(max-min + 1) + min)
 // sets dinos jump direction
 function jumpDirection(e){
     if(e.key == "ArrowUp" && dino.jumped == false){
-        dino.dir = dirSpeed;
+        dino.dir = -3;
         dino.jumped = true;
         }
         
         }
-
-
 
 
 startButton.addEventListener("click", startAnimation);
@@ -109,10 +81,21 @@ function startAnimation(){
         window.requestAnimationFrame(draw);
         // adds keydown event for jump
         window.addEventListener("keydown",jumpDirection);
+        window.addEventListener("keydown",function(e){
+            dino.duck(true,e);
+        });
+        window.addEventListener("keyup",function(e){
+           dino.duck(false,e);
+        });
         started = true;
     } else if(started === true){
         // resets game
-        speed = -4;
+        ctx.fillStyle = "white";
+        ctx.fillRect(0,0,canvasWidth, canvasHeight);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.font = "40px Arial";
+        ctx.fillText("Start A Game", 155, 75);
         cancelAnimationFrame(stopId);
         setup();
         started = false;
@@ -124,7 +107,7 @@ function startAnimation(){
 
 // end game
     function endGame(){
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "black";
     ctx.fill();
     ctx.font = "40px Arial";
     ctx.fillText("Game Over", 155, 75);
@@ -135,7 +118,17 @@ function startAnimation(){
     }
 
 
+// updates score
+function updateScore(){
+  
+  ctx.fill();
+  ctx.font = "12px Arial";
+  ctx.fillText(`score:${score++}`, 20, 20);
 
 
+
+
+
+}
 
 
