@@ -10,14 +10,17 @@ let dino;
 let numberOfCactus = 2;
 let cactus = [];
 let score;
+let runSprite;
+let jumpSprite;
+let duckSprite;
 // set up function
 function setup(){
-  score = 0;
+score = 0;
 dino = new Dino();
 for (i = 0; i < numberOfCactus; i++) {
     cactus[i] = new Cactus(canvasWidth + i * 300);
 }
-  
+
 
 }
 
@@ -35,16 +38,14 @@ function draw(){
         cactus[i].show();
         cactus[i].move();
         cactus[i].hitDetection(); 
-        cactus[i].removeAndAdd();
+        cactus[i].removeAndAdd(cactus,numberOfCactus);
+        cactus[i].animate();
+        console.log(cactus[i].y,cactus[i].x,cactus[i].w,cactus[i].h);
       }
-
-
       updateScore();
- 
-      dino.show();
-      dino.jump();
-
-      
+        dino.show();
+        dino.jump();
+        dino.animate();
     
 }
 // draws background
@@ -66,9 +67,12 @@ return Math.floor(Math.random()*(max-min + 1) + min)
 // sets dinos jump direction
 function jumpDirection(e){
     if(e.key == "ArrowUp" && dino.jumped == false){
+        dino.jumpSound.play();
         dino.dir = -3;
         dino.jumped = true;
+
         }
+       
         
         }
 
@@ -107,6 +111,7 @@ function startAnimation(){
 
 // end game
     function endGame(){
+    dino.deathSound.play();
     ctx.fillStyle = "black";
     ctx.fill();
     ctx.font = "40px Arial";
