@@ -10,9 +10,6 @@ let dino;
 let numberOfCactus = 2;
 let cactus = [];
 let score;
-let runSprite;
-let jumpSprite;
-let duckSprite;
 // set up function
 function setup(){
 score = 0;
