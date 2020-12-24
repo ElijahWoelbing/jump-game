@@ -1,3 +1,3 @@
 # jump-game
 A game inspired by the 404 game
-very little coding experince
+2 months coding experice (bad code)
